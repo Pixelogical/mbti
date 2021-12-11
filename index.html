@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>MBTI Cognitive functions</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        justify-content: center;
+        vertical-align: middle;
+        text-align: center;
+        margin: auto 20;
+        background-color: rgb(236, 236, 236);
+      }
+      canvas{
+          width: 95%;
+          margin: auto;
+          /* border: 1px solid #000000; */
+      }
+      .sliders{
+        background-color: rgb(217, 218, 204);
+        margin: auto;
+        text-align: center;
+        border-radius: 10px;
+      }
+      .sliders .slider{
+          padding: 20px;
+          flex-wrap: nowrap;
+          display: flex;
+      }
+      .sliders .slider label{
+          width: 80px;
+          word-wrap: normal;
+      }
+      .cr{
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          background-color: black;
+          color: cornsilk;
+          padding: 2px;
+          font: 0.6em sans-serif;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <canvas
+      id="myCanvas"
+      width="400"
+      height="90"
+    >
+    </canvas>
+    <!-- <div class="info">salam</div>
+    <div class="info2">salam</div>
+    <div class="info3">salam</div> -->
+    <div class="sliders">
+      <div class="slider">
+        <label for="one">[I]ntrovert</label>
+        <input type="range" name="one" id="one" value="0" />
+        <label for="one">[E]xtrovert</label>
+      </div>
+      <div class="slider">
+        <label for="two">i[N]tuition</label>
+        <input type="range" name="two" id="two" value="0" />
+        <label for="two">[S]ensing</label>
+      </div>
+      <div class="slider">
+        <label for="three">[T]hinking</label>
+        <input type="range" name="three" id="three" value="0" />
+        <label for="three">[F]eeling</label>
+      </div>
+      <div class="slider">
+        <label for="four">[J]udging</label>
+        <input type="range" name="four" id="one" value="0" />
+        <label for="four">[P]erceiving</label>
+      </div>
+    </div>
+    <div class="cr">Pixel</div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      function HSVtoRGB(h, s, v) {
+        var r, g, b, i, f, p, q, t;
+        if (arguments.length === 1) {
+          (s = h.s), (v = h.v), (h = h.h);
+        }
+        i = Math.floor(h * 6);
+        f = h * 6 - i;
+        p = v * (1 - s);
+        q = v * (1 - f * s);
+        t = v * (1 - (1 - f) * s);
+        switch (i % 6) {
+          case 0:
+            (r = v), (g = t), (b = p);
+            break;
+          case 1:
+            (r = q), (g = v), (b = p);
+            break;
+          case 2:
+            (r = p), (g = v), (b = t);
+            break;
+          case 3:
+            (r = p), (g = q), (b = v);
+            break;
+          case 4:
+            (r = t), (g = p), (b = v);
+            break;
+          case 5:
+            (r = v), (g = p), (b = q);
+            break;
+        }
+        return {
+          r: Math.round(r * 255),
+          g: Math.round(g * 255),
+          b: Math.round(b * 255),
+        };
+      }
+      function draw(c, can, fs) {
+        c.clearRect(0, 0, can.width, can.height);
+        color = HSVtoRGB((fs["Ne"] + 40) / 360, 1, 0.9);
+        c.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+        c.fillText("Ne", fs["Ne"], 50);
+        color = HSVtoRGB((fs["Ni"] + 40) / 360, 1, 0.9);
+        c.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+        c.fillText("Ni", fs["Ni"], 50);
+        color = HSVtoRGB((fs["Se"] + 40) / 360, 1, 0.9);
+        c.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+        c.fillText("Se", fs["Se"], 50);
+        color = HSVtoRGB((fs["Si"] + 40) / 360, 1, 0.9);
+        c.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+        c.fillText("Si", fs["Si"], 50);
+        color = HSVtoRGB((fs["Te"] + 40) / 360, 1, 0.9);
+        c.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+        c.fillText("Te", fs["Te"], 50);
+        color = HSVtoRGB((fs["Ti"] + 40) / 360, 1, 0.9);
+        c.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+        c.fillText("Ti", fs["Ti"], 50);
+        color = HSVtoRGB((fs["Fe"] + 40) / 360, 1, 0.9);
+        c.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+        c.fillText("Fe", fs["Fe"], 50);
+        color = HSVtoRGB((fs["Fi"] + 40) / 360, 1, 0.9);
+        c.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+        c.fillText("Fi", fs["Fi"], 50);
+      }
+      function indexOf(fs, index) {
+        fsarray = Object.keys(fs);
+        for (let i = 0; i < fsarray.length; i++) {
+          if (fs[fsarray[i]] == index) return fsarray[i];
+        }
+        return null;
+      }
+      $(document).ready(function () {
+        var fs = {
+          Ne: 310,
+          Ni: 110,
+          Se: 60,
+          Si: 260,
+          Te: 210,
+          Ti: 10,
+          Fe: 160,
+          Fi: 360,
+        };
+        var pos = {
+          dom: "Ti",
+          parent: "Se",
+          child: "Ni",
+          inferior: "Fe",
+          nemesis: "Te",
+          critical: "Si",
+          trickster: "Ne",
+          demon: "Fi",
+        };
+        var can = document.getElementById("myCanvas");
+        var c = can.getContext("2d");
+        c.font = "25px Arial";
+        draw(c, can, fs);
+        $(document).on("input", "#four", function () {
+          var slider = $(this).val();
+          $(".info").html(slider);
+          // var nemesis = indexOf(fs,310)
+          // var inferior = indexOf(fs,160)
+
+          if (parseInt(slider) < 50) {
+            fs[pos["inferior"]] = parseInt(slider) * 1.5 + 160;
+            fs[pos["trickster"]] = -parseInt(slider) * 1.5 + 310;
+            fs[pos["child"]] = parseInt(slider) * 2.5 + 110;
+            fs[pos["demon"]] = -parseInt(slider) * 2.5 + 360;
+            fs[pos["dom"]] = parseInt(slider) * 2.5 + 10;
+            fs[pos["critical"]] = -parseInt(slider) * 2.5 + 260;
+            fs[pos["parent"]] = parseInt(slider) * 1.5 + 60;
+            fs[pos["nemesis"]] = -parseInt(slider) * 1.5 + 210;
+          } else {
+            fs[pos["trickster"]] = parseInt(slider) * 1.5 + 160;
+            fs[pos["inferior"]] = -parseInt(slider) * 1.5 + 310;
+            fs[pos["demon"]] = parseInt(slider) * 2.5 + 110;
+            fs[pos["child"]] = -parseInt(slider) * 2.5 + 360;
+            fs[pos["critical"]] = parseInt(slider) * 2.5 + 10;
+            fs[pos["dom"]] = -parseInt(slider) * 2.5 + 260;
+            fs[pos["nemesis"]] = parseInt(slider) * 1.5 + 60;
+            fs[pos["parent"]] = -parseInt(slider) * 1.5 + 210;
+          }
+          if (parseInt(slider) == 50) {
+            temp = pos["inferior"];
+            pos["inferior"] = pos["trickster"];
+            pos["trickster"] = temp;
+            temp = pos["child"];
+            pos["child"] = pos["demon"];
+            pos["demon"] = temp;
+            temp = pos["dom"];
+            pos["dom"] = pos["critical"];
+            pos["critical"] = temp;
+            temp = pos["parent"];
+            pos["parent"] = pos["nemesis"];
+            pos["nemesis"] = temp;
+          }
+
+          $(".info2").html(pos["inferior"]);
+          $(".info3").html();
+          draw(c, can, fs);
+          //   fs['Ni'] = 200 - fs['Ne']
+          //   draw(c,can,fs,this);
+        });
+        $(document).on("input", "#three", function () {
+          var slider = $(this).val();
+          $(".info").html(slider);
+
+          if (
+            pos["dom"].toString().includes("F") ||
+            pos["dom"].toString().includes("T")
+          ) {
+            if (parseInt(slider) < 50) {
+              fs[pos["dom"]] = parseInt(slider) * 3.5 + 10;
+              fs[pos["demon"]] = -parseInt(slider) * 3.5 + 360;
+
+              fs[pos["inferior"]] = parseInt(slider) * 0.5 + 160;
+              fs[pos["nemesis"]] = -parseInt(slider) * 0.5 + 210;
+            } else {
+              fs[pos["demon"]] = parseInt(slider) * 3.5 + 10;
+              fs[pos["dom"]] = -parseInt(slider) * 3.5 + 360;
+
+              fs[pos["nemesis"]] = parseInt(slider) * 0.5 + 160;
+              fs[pos["inferior"]] = -parseInt(slider) * 0.5 + 210;
+            }
+            if (parseInt(slider) == 50) {
+              temp = pos["demon"];
+              pos["demon"] = pos["dom"];
+              pos["dom"] = temp;
+              temp = pos["nemesis"];
+              pos["nemesis"] = pos["inferior"];
+              pos["inferior"] = temp;
+            }
+          } else {
+            if (parseInt(slider) < 50) {
+              fs[pos["parent"]] = parseInt(slider) * 2.5 + 60;
+              fs[pos["trickster"]] = -parseInt(slider) * 2.5 + 310;
+
+              fs[pos["child"]] = parseInt(slider) * 1.5 + 110;
+              fs[pos["critical"]] = -parseInt(slider) * 1.5 + 260;
+            } else {
+              fs[pos["trickster"]] = parseInt(slider) * 2.5 + 60;
+              fs[pos["parent"]] = -parseInt(slider) * 2.5 + 310;
+
+              fs[pos["critical"]] = parseInt(slider) * 1.5 + 110;
+              fs[pos["child"]] = -parseInt(slider) * 1.5 + 260;
+            }
+            if (parseInt(slider) == 50) {
+              temp = pos["trickster"];
+              pos["trickster"] = pos["parent"];
+              pos["parent"] = temp;
+              temp = pos["critical"];
+              pos["critical"] = pos["child"];
+              pos["child"] = temp;
+            }
+          }
+
+          $(".info2").html(pos["parent"]);
+          $(".info3").html();
+          draw(c, can, fs);
+          //   fs['Ni'] = 200 - fs['Ne']
+          //   draw(c,can,fs,this);
+        });
+        $(document).on("input", "#two", function () {
+          var slider = $(this).val();
+          $(".info").html(slider);
+
+          if (
+            pos["dom"].toString().includes("N") ||
+            pos["dom"].toString().includes("S")
+          ) {
+            if (parseInt(slider) < 50) {
+              fs[pos["dom"]] = parseInt(slider) * 3.5 + 10;
+              fs[pos["demon"]] = -parseInt(slider) * 3.5 + 360;
+
+              fs[pos["inferior"]] = parseInt(slider) * 0.5 + 160;
+              fs[pos["nemesis"]] = -parseInt(slider) * 0.5 + 210;
+            } else {
+              fs[pos["demon"]] = parseInt(slider) * 3.5 + 10;
+              fs[pos["dom"]] = -parseInt(slider) * 3.5 + 360;
+
+              fs[pos["nemesis"]] = parseInt(slider) * 0.5 + 160;
+              fs[pos["inferior"]] = -parseInt(slider) * 0.5 + 210;
+            }
+            if (parseInt(slider) == 50) {
+              temp = pos["demon"];
+              pos["demon"] = pos["dom"];
+              pos["dom"] = temp;
+              temp = pos["nemesis"];
+              pos["nemesis"] = pos["inferior"];
+              pos["inferior"] = temp;
+            }
+          } else {
+            if (parseInt(slider) < 50) {
+              fs[pos["parent"]] = parseInt(slider) * 2.5 + 60;
+              fs[pos["trickster"]] = -parseInt(slider) * 2.5 + 310;
+
+              fs[pos["child"]] = parseInt(slider) * 1.5 + 110;
+              fs[pos["critical"]] = -parseInt(slider) * 1.5 + 260;
+            } else {
+              fs[pos["trickster"]] = parseInt(slider) * 2.5 + 60;
+              fs[pos["parent"]] = -parseInt(slider) * 2.5 + 310;
+
+              fs[pos["critical"]] = parseInt(slider) * 1.5 + 110;
+              fs[pos["child"]] = -parseInt(slider) * 1.5 + 260;
+            }
+            if (parseInt(slider) == 50) {
+              temp = pos["trickster"];
+              pos["trickster"] = pos["parent"];
+              pos["parent"] = temp;
+              temp = pos["critical"];
+              pos["critical"] = pos["child"];
+              pos["child"] = temp;
+            }
+          }
+
+          $(".info2").html(pos["parent"]);
+          $(".info3").html();
+          draw(c, can, fs);
+          //   fs['Ni'] = 200 - fs['Ne']
+          //   draw(c,can,fs,this);
+        });
+        ///////////////////////////
+        $(document).on("input", "#one", function () {
+          var slider = $(this).val();
+          $(".info").html(slider);
+
+          if (parseInt(slider) < 50) {
+            fs[pos["dom"]] = parseInt(slider) * 0.5 + 10;
+            fs[pos["parent"]] = -parseInt(slider) * 0.5 + 60;
+
+            fs[pos["child"]] = parseInt(slider) * 0.5 + 110;
+            fs[pos["inferior"]] = -parseInt(slider) * 0.5 + 160;
+
+            fs[pos["nemesis"]] = parseInt(slider) * 0.5 + 210;
+            fs[pos["critical"]] = -parseInt(slider) * 0.5 + 260;
+
+            fs[pos["trickster"]] = parseInt(slider) * 0.5 + 310;
+            fs[pos["demon"]] = -parseInt(slider) * 0.5 + 360;
+          } else {
+            fs[pos["parent"]] = parseInt(slider) * 0.5 + 10;
+            fs[pos["dom"]] = -parseInt(slider) * 0.5 + 60;
+
+            fs[pos["inferior"]] = parseInt(slider) * 0.5 + 110;
+            fs[pos["child"]] = -parseInt(slider) * 0.5 + 160;
+
+            fs[pos["critical"]] = parseInt(slider) * 0.5 + 210;
+            fs[pos["nemesis"]] = -parseInt(slider) * 0.5 + 260;
+
+            fs[pos["demon"]] = parseInt(slider) * 0.5 + 310;
+            fs[pos["trickster"]] = -parseInt(slider) * 0.5 + 360;
+          }
+          if (parseInt(slider) == 50) {
+            temp = pos["dom"];
+            pos["dom"] = pos["parent"];
+            pos["parent"] = temp;
+            temp = pos["inferior"];
+            pos["inferior"] = pos["child"];
+            pos["child"] = temp;
+
+            temp = pos["nemesis"];
+            pos["nemesis"] = pos["critical"];
+            pos["critical"] = temp;
+            temp = pos["demon"];
+            pos["demon"] = pos["trickster"];
+            pos["trickster"] = temp;
+          }
+
+          $(".info2").html(pos["parent"]);
+          $(".info3").html();
+          draw(c, can, fs);
+          //   fs['Ni'] = 200 - fs['Ne']
+          //   draw(c,can,fs,this);
+        });
+      });
+    </script>
+  </body>
+</html>
