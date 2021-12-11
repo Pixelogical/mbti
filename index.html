@@ -10,75 +10,72 @@
       body {
         display: flex;
         flex-direction: column;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
         justify-content: center;
         vertical-align: middle;
         text-align: center;
         margin: auto 20;
         background-color: rgb(236, 236, 236);
       }
-      canvas{
-          width: 95%;
-          margin: auto;
-          /* border: 1px solid #000000; */
+      canvas {
+        width: 95%;
+        margin: auto;
+        /* border: 1px solid #000000; */
       }
-      .sliders{
+      .sliders {
         background-color: rgb(217, 218, 204);
         margin: auto;
         text-align: center;
         border-radius: 10px;
       }
-      .sliders .slider{
-          padding: 20px;
-          flex-wrap: nowrap;
-          display: flex;
+      .sliders .slider {
+        padding: 20px;
+        flex-wrap: nowrap;
+        display: flex;
       }
-      .sliders .slider label{
-          width: 80px;
-          word-wrap: normal;
+      .sliders .slider label {
+        width: 80px;
+        word-wrap: normal;
       }
-      .cr{
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          background-color: black;
-          color: cornsilk;
-          padding: 2px;
-          font: 0.6em sans-serif;
+      .cr {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background-color: black;
+        color: cornsilk;
+        padding: 2px;
+        font: 0.6em sans-serif;
       }
-
-
     </style>
   </head>
   <body>
-    <canvas
-      id="myCanvas"
-      width="400"
-      height="90"
-    >
-    </canvas>
+    <canvas id="myCanvas" width="400" height="90"> </canvas>
     <!-- <div class="info">salam</div>
     <div class="info2">salam</div>
     <div class="info3">salam</div> -->
     <div class="sliders">
       <div class="slider">
         <label for="one">[I]ntrovert</label>
-        <input type="range" name="one" id="one" value="0" />
+        <input type="range" name="one" id="one" value="0" list="jptickmarks" />
+        <datalist id="jptickmarks">
+          <option value="50" label="mid"></option>
+        </datalist>
         <label for="one">[E]xtrovert</label>
       </div>
       <div class="slider">
         <label for="two">i[N]tuition</label>
-        <input type="range" name="two" id="two" value="0" />
+        <input type="range" name="two" id="two" value="0" list="jptickmarks"/>
         <label for="two">[S]ensing</label>
       </div>
       <div class="slider">
         <label for="three">[T]hinking</label>
-        <input type="range" name="three" id="three" value="0" />
+        <input type="range" name="three" id="three" value="0" list="jptickmarks"/>
         <label for="three">[F]eeling</label>
       </div>
       <div class="slider">
         <label for="four">[J]udging</label>
-        <input type="range" name="four" id="four" value="0" />
+        <input type="range" name="four" id="one" value="0" list="jptickmarks"/>
         <label for="four">[P]erceiving</label>
       </div>
     </div>
